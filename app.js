@@ -13,4 +13,6 @@ http.createServer(app).listen(app.get("port"),app.get('host'),() => {
 	console.log("Express server running at "+app.get('port')+app.get("host"));
 });
 
-//commit 하고 push 할거
+//commit 하고 push 할거 push하니깐 설명 잘 뜨네
+
+//commit하고 merge 하기 branch한개만듬
