@@ -146,11 +146,11 @@ $(document).ready(function() {
     });
 
     var interval = 1000;
-    $(".slideshow").each(function(){
+    $(".slideshow").each(function() {
         var container = $(this);
         var timer;
 
-        function switchImg(){
+        function switchImg() {
             var imgs = container.find("img");
             var first = imgs.eq(0);
             var second = imgs.eq(1);
@@ -162,14 +162,15 @@ $(document).ready(function() {
 
         }
 
-        function startTimer(){
-            timer = setInterval(switchImg,interval);
-            }
-        function stopTimer(){
+        function startTimer() {
+            timer = setInterval(switchImg, interval);
+        }
+
+        function stopTimer() {
             clearInterval(timer);
         }
 
-        container.hover(stopTimer,startTimer); /*mouseover이랑 mouseout으로 구현해보기*/
+        container.hover(stopTimer, startTimer); /*mouseover이랑 mouseout으로 구현해보기*/
         startTimer();
 
     });
@@ -198,3 +199,57 @@ function move_box() {
         height: "+=50px"
     });
 }
+
+$(document).ready(function() {
+    $("#getText").click(function() {
+        $("textbox").text("글자 입력 테스트");
+        var req = $.ajax("data.txt");
+        req.done(function(data, status) {
+            var students = JSON.parse(data);
+            for (var i = 0; i < students.length; i++) {
+                var str = students[i].name + "<br>";
+                $("#textbox").append(str);
+            }
+        });
+    });
+});
+
+var req = $.ajax({
+    url: "/rss",
+    dataType: "xml"
+});
+req.done(function(data) {
+    console.log(data);
+});
+
+req.fail(function(jqXHR, textStatus) {
+    alert("failed: " + textStatus);
+});
+
+
+/*req.done(function(data){
+    var items = $(data).find("item");
+    if(items.length>0){
+        items=items.slice(0,2);
+        var uTag=$("<ul/>");
+        items.each(function(){
+            var item = $(this);
+            var lk=item.find("link").text();
+            var title=item.find("title").text();
+            var aTag=$("<a/>")
+            .attr({
+                "href":lk,
+                "target":"_blank"
+            })
+            .text(title);
+            var liTag=$("<li/>")
+            .append(aTag);
+            uTag.append(liTag);
+        });
+        $("#news").html(uTag);
+    }
+});
+
+req.fail(function(jqXHR,textStatus){
+    alert("failed: "+textStatus);
+});*/

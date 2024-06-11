@@ -51,17 +51,19 @@ router.route('/routetest').get(function(req,res){
 app.use('/', router);
 //실습1 end
 
-$(document).ready(function(){
-	$("#getText").click(function(){
-		$("textbox").text("글자 입력 테스트");
-		var req = $.ajax("data.txt");
-		req.done(function(data, status){
-			var students = JSON.parse(data);
-			for(var i=0;i<students.length;i++)
-			{
-				var str = students[i].name+"<br>";
-				$("#textbox").append(str);
-			}
+
+router.route('/rss').get(function(req,res){
+	console.log("rss data requested");
+	var feed="http://fs.jtbc.joins.com/RSS/entertainment.xml";
+	http.get(feed,function(httpres){
+		var rss_res="";
+		httpres.on('data',function(chunk){
+			rss_res+=chunk;
+		});
+		httpres.on('end',function(){
+			res.send(rss_res);
+			console.log("rss response completed");
+			res.end();
 		});
 	});
 });
